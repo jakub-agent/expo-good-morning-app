@@ -51,6 +51,88 @@ const TRANSACTIONS = [
     color: '#FEF3C7',
     emoji: '🛒',
   },
+  {
+    name: 'Uber',
+    when: '3 days ago',
+    amount: '-$18.20',
+    positive: false,
+    color: '#E0E7FF',
+    emoji: '🚗',
+  },
+  {
+    name: 'Netflix',
+    when: '4 days ago',
+    amount: '-$15.99',
+    positive: false,
+    color: '#FEE2E2',
+    emoji: '🎬',
+  },
+  {
+    name: 'Refund — Amazon',
+    when: '5 days ago',
+    amount: '+$42.10',
+    positive: true,
+    color: '#DCFCE7',
+    emoji: '📦',
+  },
+  {
+    name: 'Gym membership',
+    when: '6 days ago',
+    amount: '-$29.00',
+    positive: false,
+    color: '#CFFAFE',
+    emoji: '🏋️',
+  },
+];
+
+const SPENDING = [
+  { label: 'Food & drinks', amount: '$320.40', pct: 0.78, color: '#F97316' },
+  { label: 'Transport', amount: '$142.10', pct: 0.42, color: '#3B82F6' },
+  { label: 'Shopping', amount: '$210.80', pct: 0.55, color: '#A855F7' },
+  { label: 'Bills', amount: '$480.00', pct: 0.92, color: '#10B981' },
+];
+
+const BILLS = [
+  {
+    name: 'Rent',
+    when: 'Due in 3 days',
+    amount: '$1,200.00',
+    color: '#E0E7FF',
+    emoji: '🏠',
+  },
+  {
+    name: 'Electricity',
+    when: 'Due in 6 days',
+    amount: '$84.30',
+    color: '#FEF3C7',
+    emoji: '💡',
+  },
+  {
+    name: 'Internet',
+    when: 'Due in 9 days',
+    amount: '$59.99',
+    color: '#CFFAFE',
+    emoji: '🌐',
+  },
+];
+
+const GOALS = [
+  {
+    name: 'Vacation — Japan',
+    saved: '$2,400',
+    target: '$5,000',
+    pct: 0.48,
+    color: '#F472B6',
+    emoji: '✈️',
+  },
+  {
+    name: 'Emergency fund',
+    saved: '$3,800',
+    target: '$6,000',
+    pct: 0.63,
+    color: '#34D399',
+    emoji: '🛟',
+  },
 ];
 
 function BalanceChart() {
@@ -191,6 +273,105 @@ export default function HomeScreen() {
                 >
                   {tx.amount}
                 </Text>
+              </View>
+            ))}
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Spending by category</Text>
+              <Text style={styles.sectionLink}>This month</Text>
+            </View>
+
+            <View style={styles.cardBlock}>
+              {SPENDING.map((cat, i) => (
+                <View
+                  key={cat.label}
+                  style={[
+                    styles.spendRow,
+                    i < SPENDING.length - 1 && styles.spendRowDivider,
+                  ]}
+                >
+                  <View style={styles.spendTopRow}>
+                    <Text style={styles.spendLabel}>{cat.label}</Text>
+                    <Text style={styles.spendAmount}>{cat.amount}</Text>
+                  </View>
+                  <View style={styles.barTrack}>
+                    <View
+                      style={[
+                        styles.barFill,
+                        {
+                          width: `${cat.pct * 100}%`,
+                          backgroundColor: cat.color,
+                        },
+                      ]}
+                    />
+                  </View>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Upcoming bills</Text>
+              <Text style={styles.sectionLink}>See all</Text>
+            </View>
+
+            {BILLS.map((bill) => (
+              <View key={bill.name} style={styles.rowCard}>
+                <View
+                  style={[styles.rowIcon, { backgroundColor: bill.color }]}
+                >
+                  <Text style={styles.rowEmoji}>{bill.emoji}</Text>
+                </View>
+                <View style={styles.rowLines}>
+                  <Text style={styles.rowTitle}>{bill.name}</Text>
+                  <Text style={styles.rowSubtitle}>{bill.when}</Text>
+                </View>
+                <Text style={styles.rowAmount}>{bill.amount}</Text>
+              </View>
+            ))}
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Savings goals</Text>
+              <Text style={styles.sectionLink}>See all</Text>
+            </View>
+
+            {GOALS.map((goal) => (
+              <View key={goal.name} style={styles.goalCard}>
+                <View style={styles.goalTopRow}>
+                  <View
+                    style={[
+                      styles.rowIcon,
+                      { backgroundColor: 'rgba(255,255,255,0.18)' },
+                    ]}
+                  >
+                    <Text style={styles.rowEmoji}>{goal.emoji}</Text>
+                  </View>
+                  <View style={styles.rowLines}>
+                    <Text style={styles.goalTitle}>{goal.name}</Text>
+                    <Text style={styles.goalSubtitle}>
+                      {goal.saved} of {goal.target}
+                    </Text>
+                  </View>
+                  <Text style={styles.goalPct}>
+                    {Math.round(goal.pct * 100)}%
+                  </Text>
+                </View>
+                <View style={styles.goalTrack}>
+                  <View
+                    style={[
+                      styles.goalFill,
+                      {
+                        width: `${goal.pct * 100}%`,
+                        backgroundColor: goal.color,
+                      },
+                    ]}
+                  />
+                </View>
               </View>
             ))}
           </View>
@@ -418,5 +599,80 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
     color: '#0F172A',
+  },
+  cardBlock: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    paddingHorizontal: 14,
+    paddingVertical: 4,
+  },
+  spendRow: {
+    paddingVertical: 12,
+    gap: 8,
+  },
+  spendRowDivider: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#E2E8F0',
+  },
+  spendTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+  },
+  spendLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#0F172A',
+  },
+  spendAmount: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#0F172A',
+  },
+  barTrack: {
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#F1F5F9',
+    overflow: 'hidden',
+  },
+  barFill: {
+    height: '100%',
+    borderRadius: 3,
+  },
+  goalCard: {
+    backgroundColor: '#0F172A',
+    borderRadius: 18,
+    padding: 14,
+    gap: 12,
+  },
+  goalTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  goalTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  goalSubtitle: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.6)',
+    marginTop: 2,
+  },
+  goalPct: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  goalTrack: {
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: 'rgba(255,255,255,0.12)',
+    overflow: 'hidden',
+  },
+  goalFill: {
+    height: '100%',
+    borderRadius: 3,
   },
 });
