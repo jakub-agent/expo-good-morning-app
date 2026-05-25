@@ -3,12 +3,16 @@
     "name": "expo-good-morning-app",
     "slug": "expo-good-morning-app",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "expogoodmorningapp",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.anonymous.expogoodmorningapp",
+      "supportsTablet": true,
+      "requireFullScreen": true,
+      "appleTeamId": "S8W87F722K"
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +21,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.expogoodmorningapp"
     },
     "web": {
       "output": "static",
