@@ -1,168 +1,140 @@
-import { LinearGradient } from 'expo-linear-gradient';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Defs, LinearGradient as SvgLinearGradient, Path, Stop } from 'react-native-svg';
+import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { BalanceChart } from "@/components/balance-chart";
 
 const ACCOUNTS = [
   {
-    name: 'Primary account',
-    last4: '1234',
-    balance: '$7,420.20',
-    color: '#2A2A33',
-    emoji: '💳',
+    name: "Primary account",
+    last4: "1234",
+    balance: "$7,420.20",
+    color: "#2A2A33",
+    emoji: "💳",
   },
   {
-    name: 'Savings account',
-    last4: '5678',
-    balance: '$5,120.30',
-    color: '#7C3AED',
-    emoji: '🏦',
+    name: "Savings account",
+    last4: "5678",
+    balance: "$5,120.30",
+    color: "#7C3AED",
+    emoji: "🏦",
   },
 ];
 
 const TRANSACTIONS = [
   {
-    name: 'Coffee House',
-    when: 'Today, 8:30 AM',
-    amount: '-$4.50',
+    name: "Coffee House",
+    when: "Today, 8:30 AM",
+    amount: "-$4.50",
     positive: false,
-    color: '#FFE4D6',
-    emoji: '☕',
+    color: "#FFE4D6",
+    emoji: "☕",
   },
   {
-    name: 'Salary',
-    when: 'Yesterday',
-    amount: '+$3,200.00',
+    name: "Salary",
+    when: "Yesterday",
+    amount: "+$3,200.00",
     positive: true,
-    color: '#DCFCE7',
-    emoji: '💰',
+    color: "#DCFCE7",
+    emoji: "💰",
   },
   {
-    name: 'Grocery Store',
-    when: '2 days ago',
-    amount: '-$82.40',
+    name: "Grocery Store",
+    when: "2 days ago",
+    amount: "-$82.40",
     positive: false,
-    color: '#FEF3C7',
-    emoji: '🛒',
+    color: "#FEF3C7",
+    emoji: "🛒",
   },
   {
-    name: 'Uber',
-    when: '3 days ago',
-    amount: '-$18.20',
+    name: "Uber",
+    when: "3 days ago",
+    amount: "-$18.20",
     positive: false,
-    color: '#E0E7FF',
-    emoji: '🚗',
+    color: "#E0E7FF",
+    emoji: "🚗",
   },
   {
-    name: 'Netflix',
-    when: '4 days ago',
-    amount: '-$15.99',
+    name: "Netflix",
+    when: "4 days ago",
+    amount: "-$15.99",
     positive: false,
-    color: '#FEE2E2',
-    emoji: '🎬',
+    color: "#FEE2E2",
+    emoji: "🎬",
   },
   {
-    name: 'Refund — Amazon',
-    when: '5 days ago',
-    amount: '+$42.10',
+    name: "Refund — Amazon",
+    when: "5 days ago",
+    amount: "+$42.10",
     positive: true,
-    color: '#DCFCE7',
-    emoji: '📦',
+    color: "#DCFCE7",
+    emoji: "📦",
   },
   {
-    name: 'Gym membership',
-    when: '6 days ago',
-    amount: '-$29.00',
+    name: "Gym membership",
+    when: "6 days ago",
+    amount: "-$29.00",
     positive: false,
-    color: '#CFFAFE',
-    emoji: '🏋️',
+    color: "#CFFAFE",
+    emoji: "🏋️",
   },
 ];
 
 const SPENDING = [
-  { label: 'Food & drinks', amount: '$320.40', pct: 0.78, color: '#F97316' },
-  { label: 'Transport', amount: '$142.10', pct: 0.42, color: '#3B82F6' },
-  { label: 'Shopping', amount: '$210.80', pct: 0.55, color: '#A855F7' },
-  { label: 'Bills', amount: '$480.00', pct: 0.92, color: '#10B981' },
+  { label: "Food & drinks", amount: "$320.40", pct: 0.78, color: "#F97316" },
+  { label: "Transport", amount: "$142.10", pct: 0.42, color: "#3B82F6" },
+  { label: "Shopping", amount: "$210.80", pct: 0.55, color: "#A855F7" },
+  { label: "Bills", amount: "$480.00", pct: 0.92, color: "#10B981" },
 ];
 
 const BILLS = [
   {
-    name: 'Rent',
-    when: 'Due in 3 days',
-    amount: '$1,200.00',
-    color: '#E0E7FF',
-    emoji: '🏠',
+    name: "Rent",
+    when: "Due in 3 days",
+    amount: "$1,200.00",
+    color: "#E0E7FF",
+    emoji: "🏠",
   },
   {
-    name: 'Electricity',
-    when: 'Due in 6 days',
-    amount: '$84.30',
-    color: '#FEF3C7',
-    emoji: '💡',
+    name: "Electricity",
+    when: "Due in 6 days",
+    amount: "$84.30",
+    color: "#FEF3C7",
+    emoji: "💡",
   },
   {
-    name: 'Internet',
-    when: 'Due in 9 days',
-    amount: '$59.99',
-    color: '#CFFAFE',
-    emoji: '🌐',
+    name: "Internet",
+    when: "Due in 9 days",
+    amount: "$59.99",
+    color: "#CFFAFE",
+    emoji: "🌐",
   },
 ];
 
 const GOALS = [
   {
-    name: 'Vacation — Japan',
-    saved: '$2,400',
-    target: '$5,000',
+    name: "Vacation — Japan",
+    saved: "$2,400",
+    target: "$5,000",
     pct: 0.48,
-    color: '#F472B6',
-    emoji: '✈️',
+    color: "#F472B6",
+    emoji: "✈️",
   },
   {
-    name: 'Emergency fund',
-    saved: '$3,800',
-    target: '$6,000',
+    name: "Emergency fund",
+    saved: "$3,800",
+    target: "$6,000",
     pct: 0.63,
-    color: '#34D399',
-    emoji: '🛟',
+    color: "#34D399",
+    emoji: "🛟",
   },
 ];
-
-function BalanceChart() {
-  return (
-    <Svg width="100%" height="80" viewBox="0 0 320 80" preserveAspectRatio="none">
-      <Defs>
-        <SvgLinearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
-          <Stop offset="0" stopColor="#4ADE80" stopOpacity="0.35" />
-          <Stop offset="1" stopColor="#4ADE80" stopOpacity="0" />
-        </SvgLinearGradient>
-      </Defs>
-      <Path
-        d="M0,55 C30,50 50,30 80,32 C110,34 130,55 160,52 C190,49 210,28 240,22 C270,16 295,28 320,18 L320,80 L0,80 Z"
-        fill="url(#fill)"
-      />
-      <Path
-        d="M0,55 C30,50 50,30 80,32 C110,34 130,55 160,52 C190,49 210,28 240,22 C270,16 295,28 320,18"
-        stroke="#4ADE80"
-        strokeWidth="2.5"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </Svg>
-  );
-}
 
 export default function HomeScreen() {
   return (
     <View style={styles.root}>
-      <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
+      <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
         <ScrollView
           contentContainerStyle={styles.scroll}
           showsVerticalScrollIndicator={false}
@@ -190,41 +162,48 @@ export default function HomeScreen() {
             <Text style={styles.subgreeting}>Here's your overview</Text>
           </View>
 
-          <LinearGradient
-            colors={['#0F2A2E', '#0B1F22']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.heroCard}
-          >
-            <View style={styles.heroTopRow}>
-              <Text style={styles.heroLabel}>Total balance</Text>
-              <Text style={styles.heroEye}>👁</Text>
-            </View>
+          <Link href="/chart" asChild>
+            <Link.Trigger withAppleZoom>
+              <Pressable style={styles.heroCard}>
+                <LinearGradient
+                  colors={["#0F2A2E", "#0B1F22"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.heroCardGradient}
+                >
+                  <View style={styles.heroTopRow}>
+                    <Text style={styles.heroLabel}>Total balance</Text>
+                    <Text style={styles.heroEye}>👁</Text>
+                  </View>
 
-            <View style={styles.heroAmountRow}>
-              <Text style={styles.heroAmount}>$12,540.50</Text>
-              <View style={styles.heroPill}>
-                <Text style={styles.heroPillText}>+8.2%</Text>
-              </View>
-            </View>
+                  <View style={styles.heroAmountRow}>
+                    <Text style={styles.heroAmount}>$12,540.50</Text>
+                    <View style={styles.heroPill}>
+                      <Text style={styles.heroPillText}>+8.2%</Text>
+                    </View>
+                  </View>
 
-            <Text style={styles.heroFooter}>from last month</Text>
+                  <Text style={styles.heroFooter}>from last month</Text>
 
-            <View style={styles.chartWrap}>
-              <BalanceChart />
-            </View>
+                  <View style={styles.chartWrap}>
+                    <BalanceChart />
+                  </View>
 
-            <View style={styles.heroActions}>
-              <Pressable style={styles.heroAction}>
-                <Text style={styles.heroActionIcon}>＋</Text>
-                <Text style={styles.heroActionText}>Add money</Text>
+                  <View style={styles.heroActions}>
+                    <View style={styles.heroAction}>
+                      <Text style={styles.heroActionIcon}>＋</Text>
+                      <Text style={styles.heroActionText}>Add money</Text>
+                    </View>
+                    <View style={styles.heroAction}>
+                      <Text style={styles.heroActionIcon}>↗</Text>
+                      <Text style={styles.heroActionText}>Send</Text>
+                    </View>
+                  </View>
+                </LinearGradient>
               </Pressable>
-              <Pressable style={styles.heroAction}>
-                <Text style={styles.heroActionIcon}>↗</Text>
-                <Text style={styles.heroActionText}>Send</Text>
-              </Pressable>
-            </View>
-          </LinearGradient>
+            </Link.Trigger>
+            <Link.Preview />
+          </Link>
 
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
@@ -256,9 +235,7 @@ export default function HomeScreen() {
 
             {TRANSACTIONS.map((tx) => (
               <View key={tx.name} style={styles.rowCard}>
-                <View
-                  style={[styles.rowIcon, { backgroundColor: tx.color }]}
-                >
+                <View style={[styles.rowIcon, { backgroundColor: tx.color }]}>
                   <Text style={styles.rowEmoji}>{tx.emoji}</Text>
                 </View>
                 <View style={styles.rowLines}>
@@ -268,7 +245,7 @@ export default function HomeScreen() {
                 <Text
                   style={[
                     styles.rowAmount,
-                    { color: tx.positive ? '#10B981' : '#0F172A' },
+                    { color: tx.positive ? "#10B981" : "#0F172A" },
                   ]}
                 >
                   {tx.amount}
@@ -320,9 +297,7 @@ export default function HomeScreen() {
 
             {BILLS.map((bill) => (
               <View key={bill.name} style={styles.rowCard}>
-                <View
-                  style={[styles.rowIcon, { backgroundColor: bill.color }]}
-                >
+                <View style={[styles.rowIcon, { backgroundColor: bill.color }]}>
                   <Text style={styles.rowEmoji}>{bill.emoji}</Text>
                 </View>
                 <View style={styles.rowLines}>
@@ -346,7 +321,7 @@ export default function HomeScreen() {
                   <View
                     style={[
                       styles.rowIcon,
-                      { backgroundColor: 'rgba(255,255,255,0.18)' },
+                      { backgroundColor: "rgba(255,255,255,0.18)" },
                     ]}
                   >
                     <Text style={styles.rowEmoji}>{goal.emoji}</Text>
@@ -384,7 +359,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#F6F7FB',
+    backgroundColor: "#F6F7FB",
   },
   safeArea: {
     flex: 1,
@@ -396,49 +371,49 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   topBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   topBarRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 12,
   },
   iconButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   menuIcon: {
     fontSize: 26,
-    color: '#0F172A',
-    fontWeight: '300',
+    color: "#0F172A",
+    fontWeight: "300",
   },
   bellIcon: {
     fontSize: 20,
   },
   notifDot: {
-    position: 'absolute',
+    position: "absolute",
     top: 8,
     right: 8,
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#EF4444',
+    backgroundColor: "#EF4444",
     borderWidth: 1.5,
-    borderColor: '#F6F7FB',
+    borderColor: "#F6F7FB",
   },
   avatar: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#FFE0F0',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
+    backgroundColor: "#FFE0F0",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
   },
   avatarEmoji: {
     fontSize: 26,
@@ -448,8 +423,8 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 30,
-    fontWeight: '800',
-    color: '#0F172A',
+    fontWeight: "800",
+    color: "#0F172A",
     letterSpacing: -0.6,
     lineHeight: 36,
   },
@@ -458,59 +433,62 @@ const styles = StyleSheet.create({
   },
   subgreeting: {
     fontSize: 14,
-    color: '#64748B',
+    color: "#64748B",
     marginTop: 6,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   heroCard: {
     borderRadius: 24,
-    padding: 20,
-    gap: 6,
-    shadowColor: '#0F2A2E',
+    overflow: "hidden",
+    shadowColor: "#0F2A2E",
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.18,
     shadowRadius: 24,
     elevation: 8,
   },
+  heroCardGradient: {
+    padding: 20,
+    gap: 6,
+  },
   heroTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   heroLabel: {
-    color: 'rgba(255,255,255,0.7)',
+    color: "rgba(255,255,255,0.7)",
     fontSize: 13,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   heroEye: {
     fontSize: 14,
     opacity: 0.7,
   },
   heroAmountRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 10,
     marginTop: 4,
   },
   heroAmount: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 32,
-    fontWeight: '800',
+    fontWeight: "800",
     letterSpacing: -0.8,
   },
   heroPill: {
-    backgroundColor: 'rgba(74, 222, 128, 0.18)',
+    backgroundColor: "rgba(74, 222, 128, 0.18)",
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 8,
   },
   heroPillText: {
-    color: '#4ADE80',
+    color: "#4ADE80",
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   heroFooter: {
-    color: 'rgba(255,255,255,0.55)',
+    color: "rgba(255,255,255,0.55)",
     fontSize: 12,
     marginTop: -2,
   },
@@ -519,65 +497,65 @@ const styles = StyleSheet.create({
     marginHorizontal: -6,
   },
   heroActions: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 10,
     marginTop: 12,
   },
   heroAction: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     gap: 8,
     paddingVertical: 12,
     borderRadius: 14,
-    backgroundColor: 'rgba(255,255,255,0.12)',
+    backgroundColor: "rgba(255,255,255,0.12)",
   },
   heroActionIcon: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   heroActionText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   section: {
     gap: 10,
   },
   sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
     paddingHorizontal: 2,
   },
   sectionTitle: {
     fontSize: 17,
-    fontWeight: '700',
-    color: '#0F172A',
+    fontWeight: "700",
+    color: "#0F172A",
     letterSpacing: -0.2,
   },
   sectionLink: {
     fontSize: 13,
-    color: '#64748B',
-    fontWeight: '500',
+    color: "#64748B",
+    fontWeight: "500",
   },
   rowCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 12,
     paddingVertical: 12,
     paddingHorizontal: 14,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderRadius: 18,
   },
   rowIcon: {
     width: 40,
     height: 40,
     borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   rowEmoji: {
     fontSize: 18,
@@ -587,21 +565,21 @@ const styles = StyleSheet.create({
   },
   rowTitle: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#0F172A',
+    fontWeight: "600",
+    color: "#0F172A",
   },
   rowSubtitle: {
     fontSize: 12,
-    color: '#94A3B8',
+    color: "#94A3B8",
     marginTop: 2,
   },
   rowAmount: {
     fontSize: 14,
-    fontWeight: '700',
-    color: '#0F172A',
+    fontWeight: "700",
+    color: "#0F172A",
   },
   cardBlock: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderRadius: 18,
     paddingHorizontal: 14,
     paddingVertical: 4,
@@ -612,67 +590,67 @@ const styles = StyleSheet.create({
   },
   spendRowDivider: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#E2E8F0',
+    borderBottomColor: "#E2E8F0",
   },
   spendTopRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "baseline",
   },
   spendLabel: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#0F172A',
+    fontWeight: "600",
+    color: "#0F172A",
   },
   spendAmount: {
     fontSize: 13,
-    fontWeight: '700',
-    color: '#0F172A',
+    fontWeight: "700",
+    color: "#0F172A",
   },
   barTrack: {
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#F1F5F9',
-    overflow: 'hidden',
+    backgroundColor: "#F1F5F9",
+    overflow: "hidden",
   },
   barFill: {
-    height: '100%',
+    height: "100%",
     borderRadius: 3,
   },
   goalCard: {
-    backgroundColor: '#0F172A',
+    backgroundColor: "#0F172A",
     borderRadius: 18,
     padding: 14,
     gap: 12,
   },
   goalTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 12,
   },
   goalTitle: {
     fontSize: 14,
-    fontWeight: '700',
-    color: '#FFFFFF',
+    fontWeight: "700",
+    color: "#FFFFFF",
   },
   goalSubtitle: {
     fontSize: 12,
-    color: 'rgba(255,255,255,0.6)',
+    color: "rgba(255,255,255,0.6)",
     marginTop: 2,
   },
   goalPct: {
     fontSize: 14,
-    fontWeight: '700',
-    color: '#FFFFFF',
+    fontWeight: "700",
+    color: "#FFFFFF",
   },
   goalTrack: {
     height: 6,
     borderRadius: 3,
-    backgroundColor: 'rgba(255,255,255,0.12)',
-    overflow: 'hidden',
+    backgroundColor: "rgba(255,255,255,0.12)",
+    overflow: "hidden",
   },
   goalFill: {
-    height: '100%',
+    height: "100%",
     borderRadius: 3,
   },
 });
