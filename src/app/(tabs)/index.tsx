@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Pressable,
@@ -7,7 +8,8 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Defs, LinearGradient as SvgLinearGradient, Path, Stop } from 'react-native-svg';
+
+import { BalanceChart } from '@/components/balance-chart';
 
 const ACCOUNTS = [
   {
@@ -135,30 +137,6 @@ const GOALS = [
   },
 ];
 
-function BalanceChart() {
-  return (
-    <Svg width="100%" height="80" viewBox="0 0 320 80" preserveAspectRatio="none">
-      <Defs>
-        <SvgLinearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
-          <Stop offset="0" stopColor="#4ADE80" stopOpacity="0.35" />
-          <Stop offset="1" stopColor="#4ADE80" stopOpacity="0" />
-        </SvgLinearGradient>
-      </Defs>
-      <Path
-        d="M0,55 C30,50 50,30 80,32 C110,34 130,55 160,52 C190,49 210,28 240,22 C270,16 295,28 320,18 L320,80 L0,80 Z"
-        fill="url(#fill)"
-      />
-      <Path
-        d="M0,55 C30,50 50,30 80,32 C110,34 130,55 160,52 C190,49 210,28 240,22 C270,16 295,28 320,18"
-        stroke="#4ADE80"
-        strokeWidth="2.5"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </Svg>
-  );
-}
-
 export default function HomeScreen() {
   return (
     <View style={styles.root}>
@@ -190,41 +168,46 @@ export default function HomeScreen() {
             <Text style={styles.subgreeting}>Here's your overview</Text>
           </View>
 
-          <LinearGradient
-            colors={['#0F2A2E', '#0B1F22']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.heroCard}
-          >
-            <View style={styles.heroTopRow}>
-              <Text style={styles.heroLabel}>Total balance</Text>
-              <Text style={styles.heroEye}>👁</Text>
-            </View>
+          <Link href="/chart">
+            <Link.Trigger withAppleZoom>
+              <LinearGradient
+                colors={['#0F2A2E', '#0B1F22']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.heroCard}
+              >
+                <View style={styles.heroTopRow}>
+                  <Text style={styles.heroLabel}>Total balance</Text>
+                  <Text style={styles.heroEye}>👁</Text>
+                </View>
 
-            <View style={styles.heroAmountRow}>
-              <Text style={styles.heroAmount}>$12,540.50</Text>
-              <View style={styles.heroPill}>
-                <Text style={styles.heroPillText}>+8.2%</Text>
-              </View>
-            </View>
+                <View style={styles.heroAmountRow}>
+                  <Text style={styles.heroAmount}>$12,540.50</Text>
+                  <View style={styles.heroPill}>
+                    <Text style={styles.heroPillText}>+8.2%</Text>
+                  </View>
+                </View>
 
-            <Text style={styles.heroFooter}>from last month</Text>
+                <Text style={styles.heroFooter}>from last month</Text>
 
-            <View style={styles.chartWrap}>
-              <BalanceChart />
-            </View>
+                <View style={styles.chartWrap}>
+                  <BalanceChart />
+                </View>
 
-            <View style={styles.heroActions}>
-              <Pressable style={styles.heroAction}>
-                <Text style={styles.heroActionIcon}>＋</Text>
-                <Text style={styles.heroActionText}>Add money</Text>
-              </Pressable>
-              <Pressable style={styles.heroAction}>
-                <Text style={styles.heroActionIcon}>↗</Text>
-                <Text style={styles.heroActionText}>Send</Text>
-              </Pressable>
-            </View>
-          </LinearGradient>
+                <View style={styles.heroActions}>
+                  <View style={styles.heroAction}>
+                    <Text style={styles.heroActionIcon}>＋</Text>
+                    <Text style={styles.heroActionText}>Add money</Text>
+                  </View>
+                  <View style={styles.heroAction}>
+                    <Text style={styles.heroActionIcon}>↗</Text>
+                    <Text style={styles.heroActionText}>Send</Text>
+                  </View>
+                </View>
+              </LinearGradient>
+            </Link.Trigger>
+            <Link.Preview />
+          </Link>
 
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
