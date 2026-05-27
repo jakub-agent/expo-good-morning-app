@@ -106,24 +106,6 @@ export default function ChartScreen() {
 
   return (
     <View style={styles.root}>
-      <Stack.Toolbar>
-        <Stack.Toolbar.Button accessibilityLabel="Share" onPress={() => {}}>
-          <Stack.Toolbar.Icon src={Share} />
-          <Stack.Toolbar.Label>Share</Stack.Toolbar.Label>
-        </Stack.Toolbar.Button>
-        <Stack.Toolbar.Button accessibilityLabel="Export" onPress={() => {}}>
-          <Stack.Toolbar.Icon src={Download} />
-          <Stack.Toolbar.Label>Export</Stack.Toolbar.Label>
-        </Stack.Toolbar.Button>
-        <Stack.Toolbar.Button accessibilityLabel="Alerts" onPress={() => {}}>
-          <Stack.Toolbar.Icon src={Notifications} />
-          <Stack.Toolbar.Label>Alerts</Stack.Toolbar.Label>
-        </Stack.Toolbar.Button>
-        <Stack.Toolbar.Button accessibilityLabel="Info" onPress={() => {}}>
-          <Stack.Toolbar.Icon src={Info} />
-          <Stack.Toolbar.Label>Info</Stack.Toolbar.Label>
-        </Stack.Toolbar.Button>
-      </Stack.Toolbar>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
           <Pressable
@@ -300,6 +282,24 @@ export default function ChartScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
+      <Stack.Toolbar>
+        <Stack.Toolbar.Button accessibilityLabel="Share" onPress={() => {}}>
+          <Stack.Toolbar.Icon src={Share} />
+          <Stack.Toolbar.Label>Share</Stack.Toolbar.Label>
+        </Stack.Toolbar.Button>
+        <Stack.Toolbar.Button accessibilityLabel="Export" onPress={() => {}}>
+          <Stack.Toolbar.Icon src={Download} />
+          <Stack.Toolbar.Label>Export</Stack.Toolbar.Label>
+        </Stack.Toolbar.Button>
+        <Stack.Toolbar.Button accessibilityLabel="Alerts" onPress={() => {}}>
+          <Stack.Toolbar.Icon src={Notifications} />
+          <Stack.Toolbar.Label>Alerts</Stack.Toolbar.Label>
+        </Stack.Toolbar.Button>
+        <Stack.Toolbar.Button accessibilityLabel="Info" onPress={() => {}}>
+          <Stack.Toolbar.Icon src={Info} />
+          <Stack.Toolbar.Label>Info</Stack.Toolbar.Label>
+        </Stack.Toolbar.Button>
+      </Stack.Toolbar>
     </View>
   );
 }
