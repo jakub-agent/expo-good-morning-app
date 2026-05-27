@@ -282,7 +282,7 @@ export default function ChartScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <Stack.Toolbar>
+      <Stack.Toolbar backgroundColor="#0F2A2E" tintColor="#FFFFFF">
         <Stack.Toolbar.Button accessibilityLabel="Share" onPress={() => {}}>
           <Stack.Toolbar.Icon src={Share} />
           <Stack.Toolbar.Label>Share</Stack.Toolbar.Label>
@@ -307,7 +307,7 @@ export default function ChartScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#E4E9F2',
+    backgroundColor: '#F6F7FB',
   },
   safeArea: {
     flex: 1,
