@@ -307,7 +307,7 @@ export default function ChartScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#F6F7FB',
+    backgroundColor: '#E4E9F2',
   },
   safeArea: {
     flex: 1,
